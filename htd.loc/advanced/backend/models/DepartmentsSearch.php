@@ -17,9 +17,10 @@ class DepartmentsSearch extends Departments
      */
     public function rules()
     {
+        // For search by branch_name, need to place "branch_id" from [...,integer] to [..., safe]
         return [
-            [['dept_id', 'branch_id', 'company_id', 'dept_status'], 'integer'],
-            [['dept_name', 'dept_created_date'], 'safe'],
+            [['dept_id', 'company_id', 'dept_status'], 'integer'],
+            [['branch_id', 'dept_name', 'dept_created_date'], 'safe'],
         ];
     }
 
@@ -57,16 +58,23 @@ class DepartmentsSearch extends Departments
             return $dataProvider;
         }
 
+        // in order for search to join 2 model objects
+        $query->joinWith('branch');
+
         // grid filtering conditions
         $query->andFilterWhere([
             'dept_id' => $this->dept_id,
-            'branch_id' => $this->branch_id,
+//            'branch_id' => $this->branch_id,
+//      replace with different filter
             'company_id' => $this->company_id,
             'dept_created_date' => $this->dept_created_date,
             'dept_status' => $this->dept_status,
         ]);
 
         $query->andFilterWhere(['like', 'dept_name', $this->dept_name]);
+
+        //map 2 models to join properly
+        $query->andFilterWhere(['like', 'branches.branch_name', $this->branch_id]);
 
         return $dataProvider;
     }

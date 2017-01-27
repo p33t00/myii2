@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use \yii\helpers\ArrayHelper;
+use backend\models\Companies;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Departments */
@@ -16,11 +18,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'dept_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'company_id')->textInput() ?>
+    <?= $form->field($model, 'company_id')->dropDownList(
+        ArrayHelper::map(Companies::find()->all(), 'company_id', 'company_name')
+    ) ?>
 
-    <?= $form->field($model, 'dept_created_date')->textInput() ?>
-
-    <?= $form->field($model, 'dept_status')->textInput() ?>
+    <?= $form->field($model, 'dept_status')->checkbox() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

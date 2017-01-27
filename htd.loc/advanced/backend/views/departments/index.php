@@ -25,9 +25,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'dept_id',
-            'branch_id',
+            // the array below is used to add a search field for branch_id field
+            // Also need to remark DepartmentsSearch model. (see the model)
+            [
+                'attribute' => 'branch_id',
+                'value' => 'branch.branch_name'
+            ],
+//            'branch.branch_name',
             'dept_name',
-            'company_id',
+            'company.company_name',
             'dept_created_date',
             // 'dept_status',
 
