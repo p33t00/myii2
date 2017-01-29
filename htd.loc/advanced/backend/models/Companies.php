@@ -19,6 +19,8 @@ use Yii;
  */
 class Companies extends \yii\db\ActiveRecord
 {
+    public $file;
+
     /**
      * @inheritdoc
      */
@@ -35,9 +37,10 @@ class Companies extends \yii\db\ActiveRecord
         return [
             [['company_created_date'], 'safe'],
             [['company_status'], 'integer'],
-            [['company_name', 'company_email', 'company_address'], 'string', 'max' => 45],
+            [['company_name', 'company_email', 'company_address', 'logo'], 'string', 'max' => 255],
             [['company_email'], 'unique'],
             [['company_address'], 'unique'],
+            [['file'], 'file'],
         ];
     }
 
@@ -53,6 +56,7 @@ class Companies extends \yii\db\ActiveRecord
             'company_address' => 'Company Address',
             'company_created_date' => 'Company Created Date',
             'company_status' => 'Company Status',
+            'file' => 'LogoIMG',
         ];
     }
 
